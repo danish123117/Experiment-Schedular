@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Schedule</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Verify Experiment Schedule</h1>
+        <form method="POST" action="/verify_schedule">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for day in data.experiment_days %}
+                        {% set day_str = day.strftime('%Y-%m-%d') %}
+                        <tr>
+                            <td>{{ day_str }}</td>
+                            <td>
+                                <select name="custom_start_{{ day_str }}">
+                                    {% for time in time_options %}
+                                        <option value="{{ time }}" {% if time == data.custom_times[day_str].start %}selected{% endif %}>{{ time }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <select name="custom_end_{{ day_str }}">
+                                    {% for time in time_options %}
+                                        <option value="{{ time }}" {% if time == data.custom_times[day_str].end %}selected{% endif %}>{{ time }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>               
+            </table>
+
+            <button type="submit">Download Schedule</button>
+        </form>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Experiment Days</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Include Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Select Experiment Days</h1>
+        <form method="POST" action="/select_days">
+            <label for="experiment_days">Choose experiment days:</label>
+            <input type="text" id="experiment_days" name="experiment_days" required>
+            <small>Use the calendar to select multiple days.</small>
+
+            <button type="submit">Next</button>
+        </form>
+    </div>
+
+    <!-- Include Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#experiment_days", {
+            mode: "multiple", // Allows selecting multiple dates
+            dateFormat: "Y-m-d", // Format in YYYY-MM-DD
+        });
+    </script>
+</body>
+</html>
+
+

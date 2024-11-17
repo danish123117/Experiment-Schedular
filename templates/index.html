@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment Setup</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Setup Experiment</h1>
+        <form method="POST" action="/">
+            <label for="trial_length">Trial Length (minutes):</label>
+            <input type="number" id="trial_length" name="trial_length" value="{{ data.trial_length }}" required>
+
+            <label for="prep_time">Preparation Time (minutes):</label>
+            <input type="number" id="prep_time" name="prep_time" value="{{ data.prep_time }}" required>
+
+            <label for="default_start_time">Default Start Time:</label>
+            <select id="default_start_time" name="default_start_time" required>
+                {% for time in time_options %}
+                    <option value="{{ time }}" {% if time == data.default_start_time %}selected{% endif %}>{{ time }}</option>
+                {% endfor %}
+            </select>
+            
+            <label for="default_end_time">Default End Time:</label>
+            <select id="default_end_time" name="default_end_time" required>
+                {% for time in time_options %}
+                    <option value="{{ time }}" {% if time == data.default_end_time %}selected{% endif %}>{{ time }}</option>
+                {% endfor %}
+            </select>
+
+            <label>
+                <input type="checkbox" name="exclude_lunch" {% if data.exclude_lunch %}checked{% endif %}>
+                Exclude Lunch Break
+            </label>
+
+            <div id="lunch_times" {% if data.exclude_lunch %}style="display: none;"{% endif %}>
+                <label for="lunch_start">Lunch Start Time:</label>
+                <select id="lunch_start" name="lunch_start">
+                    {% for time in time_options %}
+                        <option value="{{ time }}" {% if time == data.lunch_start %}selected{% endif %}>{{ time }}</option>
+                    {% endfor %}
+                </select>
+            
+                <label for="lunch_end">Lunch End Time:</label>
+                <select id="lunch_end" name="lunch_end">
+                    {% for time in time_options %}
+                        <option value="{{ time }}" {% if time == data.lunch_end %}selected{% endif %}>{{ time }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit">Next</button>
+        </form>
+    </div>
+    <script>
+        document.querySelector('input[name="exclude_lunch"]').addEventListener('change', function() {
+            const lunchTimes = document.getElementById('lunch_times');
+            lunchTimes.style.display = this.checked ? 'none' : 'block';
+        });
+    </script>
+</body>
+</html>
+
+
+
